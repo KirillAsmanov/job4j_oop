@@ -1,6 +1,7 @@
 package ru.job4j.oop.inheritance;
 /**
  * Класс отчета в JSON-формате
+ * 5. Аннотация @Override[#245097]
  * 4. Переопределение[#245096]
  * @author Kirill Asmanov
  * @since 20.03.2020

@@ -2,6 +2,7 @@ package ru.job4j.oop.inheritance;
 /**
  * Класс отчета в Html-формате
  * 4. Переопределение[#245096]
+ * 5. Аннотация @Override[#245097]
  * @author Kirill Asmanov
  * @since 20.03.2020
  */
