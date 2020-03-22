@@ -25,8 +25,7 @@ public class Max {
      * @return максимальное
      */
     public static int max(int first, int second, int third) {
-        int result = first >= Max.max(second, third) ? first : Max.max(second, third);
-        return result;
+        return max(first, max(second, third));
     }
 
     /**
@@ -38,8 +37,7 @@ public class Max {
      * @return максимальное
      */
     public static int max(int first, int second, int third, int fourth) {
-        int result = first >= Max.max(second, third, fourth) ? first : Max.max(second, third, fourth);
-        return result;
+        return max(fourth, max(first, second, third));
     }
 
 }
