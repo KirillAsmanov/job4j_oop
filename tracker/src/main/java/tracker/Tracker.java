@@ -13,7 +13,7 @@ public class Tracker {
     /**
      * Массив для хранения заявок
      */
-    private final Item[] items = new Item[10];
+    private final Item[] items = new Item[100];
 
     /**
      * Указатель ячейки для новой заявки
@@ -97,12 +97,34 @@ public class Tracker {
      * @return искомый объект, либо null, если совпадений по id нет
      */
     public Item findById(String id) {
-        Item found = null;
+        int index = indexOf(id);
+        return index != -1 ? items[index] : null;
+    }
+
+    /**
+     * Производит поиск индекса по id
+     * @param id - id искомого элемента
+     * @return найденный индекс, либо -1, если индексы не совпадают
+     */
+    private int indexOf(String id) {
+        int rsl = -1;
         for (int index = 0; index < position; index++) {
-            if (id.equals(items[index].getId())) {
-                found = items[index];
+            if (items[index].getId().equals(id)) {
+                rsl = index;
+                break;
             }
         }
-        return found;
+        return rsl;
+    }
+
+    /**
+     * Меняет значение заявки на другое, при этом сохраняя id
+     * @param id - id заявки, которую надо заменить
+     * @param item - заявка, на которую надо заменить
+     */
+    public void replace(String id, Item item) {
+        int sourceIndex = indexOf(id);
+        item.setId(id);
+        items[sourceIndex] = item;
     }
 }
