@@ -127,4 +127,16 @@ public class Tracker {
         item.setId(id);
         items[sourceIndex] = item;
     }
+
+    /**
+     * Удаляет элемент из массива
+     * @param id - id удаляемого элемента
+     */
+    public void delete(String id) {
+        int index = indexOf(id);
+        items[index] = null;
+        System.arraycopy(items, index + 1, items, index, position - index);
+        items[position - 1] = null;
+        position--;
+    }
 }
