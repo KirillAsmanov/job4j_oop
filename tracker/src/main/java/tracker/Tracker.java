@@ -21,21 +21,6 @@ public class Tracker {
     private int position = 0;
 
     /**
-     * Метод выводит на консоль все элементы массива
-     * @param items - входной массив
-     */
-    public void printArray(Item[] items) {
-        for (int i = 0; i < items.length; i++) {
-            Item item = items[i];
-            if (item != null) {
-                System.out.println(item.getId() + ". " + item.getName());
-            } else {
-                System.out.println("null");
-            }
-        }
-        System.out.println("-----------------Конец массива-------------------");
-    }
-    /**
      * Метод реализующий добавление заявки в хранилище
      * @param item новая заявка
      */
@@ -60,16 +45,7 @@ public class Tracker {
      * @return - массив без null элементов
      */
     public Item[] findAll() {
-        Item[] allWithoutNulls = new Item[position];
-        int size = 0;
-        for (int index = 0; index < position; index++) {
-            if (items[index] != null) {
-                allWithoutNulls[size] = items[index];
-                size++;
-            }
-        }
-        allWithoutNulls = Arrays.copyOf(allWithoutNulls, size);
-        return allWithoutNulls;
+        return Arrays.copyOf(items, position);
     }
 
     /**
@@ -104,7 +80,7 @@ public class Tracker {
     /**
      * Производит поиск индекса по id
      * @param id - id искомого элемента
-     * @return найденный индекс, либо -1, если индексы не совпадают
+     * @return найденный индекс, либо -1, если индекса не существует
      */
     private int indexOf(String id) {
         int rsl = -1;
@@ -122,21 +98,31 @@ public class Tracker {
      * @param id - id заявки, которую надо заменить
      * @param item - заявка, на которую надо заменить
      */
-    public void replace(String id, Item item) {
-        int sourceIndex = indexOf(id);
-        item.setId(id);
-        items[sourceIndex] = item;
+    public boolean replace(String id, Item item) {
+        boolean rsl = false;
+        int index = indexOf(id);
+        if (index != -1) {
+            item.setId(id);
+            items[index] = item;
+            rsl = true;
+        }
+        return rsl;
     }
 
     /**
      * Удаляет элемент из массива
      * @param id - id удаляемого элемента
      */
-    public void delete(String id) {
+    public boolean delete(String id) {
+        boolean rsl = false;
         int index = indexOf(id);
-        items[index] = null;
-        System.arraycopy(items, index + 1, items, index, position - index);
-        items[position - 1] = null;
-        position--;
+        if (index != -1) {
+            items[index] = null;
+            System.arraycopy(items, index + 1, items, index, position - index);
+            items[position - 1] = null;
+            position--;
+            rsl = true;
+        }
+        return rsl;
     }
 }
