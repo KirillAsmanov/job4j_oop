@@ -18,53 +18,107 @@ public class StartUI {
             this.showMenu();
             int select = input.askInt("Enter a number of action: ");
             if (select == 0) {
-                System.out.println("=== Create a new Item ====");
-                String name = input.askStr("Enter name: ");
-                Item item = new Item(name);
-                tracker.add(item);
+                StartUI.createItem(input, tracker);
             } else if (select == 1) {
-                System.out.println("=== Showing all items ====");
-                Item[] elements = tracker.findAll();
-                printArray(elements);
+                StartUI.showItems(input, tracker);
             } else if (select == 2) {
-                System.out.println("=== Edit item ====");
-                String id = input.askStr("Enter item's id:");
-                String name = input.askStr("Enter new item's name:");
-                Item replaceable = new Item(name);
-                if (tracker.replace(id, replaceable)) {
-                    System.out.println("Item with number " + id + " replaced successfully.");
-                } else {
-                    System.out.println("Item with id " + id + " not found.");
-                }
+                StartUI.editItem(input, tracker);
             } else if (select == 3) {
-                System.out.println("=== Delete item ====");
-                String id = input.askStr("Enter item's id:");
-                if (tracker.delete(id)) {
-                    System.out.println("Item with number " + id + " deleted successfully.");
-                } else {
-                    System.out.println("Item with id " + id + " not found.");
-                }
+                StartUI.deleteItem(input, tracker);
             } else if (select == 4) {
-                System.out.println("=== Find item by id ====");
-                String id = input.askStr("Enter item's id:");
-                Item found = tracker.findById(id);
-                if (found != null) {
-                    System.out.println(found.getName());
-                } else {
-                    System.out.println("Item with id " + id + " not found.");
-                }
+                StartUI.findItemById(input, tracker);
             } else if (select == 5) {
-                System.out.println("=== Find item by name ====");
-                String name = input.askStr("Enter name: ");
-                Item[] selected = tracker.findByName(name);
-                if (selected.length != 0) {
-                    printArray(selected);
-                } else {
-                    System.out.println("Item with name " + name + " not found.");
-                }
+                StartUI.findItemsByName(input, tracker);
             } else if (select == 6) {
                 run = false;
             }
+        }
+    }
+
+    /**
+     * Реализует взаимодействие пользователя с алгоритмом создания и добавления нового элемента в массив
+     * @param input - интерфейс ввода данных
+     * @param tracker - экземпляр хранилища
+     */
+    public static void createItem(Input input, Tracker tracker) {
+        System.out.println("=== Create a new Item ====");
+        String name = input.askStr("Enter name: ");
+        Item item = new Item(name);
+        tracker.add(item);
+    }
+
+    /**
+     * Реализует взаимодействие пользователя с алгоритмом отображения всех not null элементов в массиве
+     * @param input - интерфейс ввода данных
+     * @param tracker - экземпляр хранилища
+     */
+    public static void showItems(Input input, Tracker tracker) {
+        System.out.println("=== Showing all items ====");
+        Item[] elements = tracker.findAll();
+        printArray(elements);
+    }
+
+    /**
+     * Реализует взаимодействие пользователя с алгоритмом редактирования элемента
+     * @param input - интерфейс ввода данных
+     * @param tracker - экземпляр хранилища
+     */
+    public static void editItem(Input input, Tracker tracker) {
+        System.out.println("=== Edit item ====");
+        String id = input.askStr("Enter item's id:");
+        String name = input.askStr("Enter new item's name:");
+        Item replaceable = new Item(name);
+        if (tracker.replace(id, replaceable)) {
+            System.out.println("Item with number " + id + " replaced successfully.");
+        } else {
+            System.out.println("Item with id " + id + " not found.");
+        }
+    }
+
+    /**
+     * Реализует взаимодействие пользователя с алгоритмом удаления элемента из массива
+     * @param input - интерфейс ввода данных
+     * @param tracker - экземпляр хранилища
+     */
+    public static void deleteItem(Input input, Tracker tracker) {
+        System.out.println("=== Delete item ====");
+        String id = input.askStr("Enter item's id:");
+        if (tracker.delete(id)) {
+            System.out.println("Item with number " + id + " deleted successfully.");
+        } else {
+            System.out.println("Item with id " + id + " not found.");
+        }
+    }
+
+    /**
+     * Реализует взаимодействие пользователя с алгоритмом поиска заявки по id
+     * @param input - интерфейс ввода данных
+     * @param tracker - экземпляр хранилища
+     */
+    public static void findItemById(Input input, Tracker tracker) {
+        System.out.println("=== Find item by id ====");
+        String id = input.askStr("Enter item's id:");
+        Item found = tracker.findById(id);
+        if (found != null) {
+            System.out.println(found.getName());
+        } else {
+            System.out.println("Item with id " + id + " not found.");
+        }
+    }
+
+    /**
+     * Реализует взаимодействие пользователя с алгоритмом поиска заявок по имени
+     * @param input - интерфейс ввода данных
+     * @param tracker - экземпляр хранилища
+     */
+    public static void findItemsByName(Input input, Tracker tracker) {
+        System.out.println("=== Find item by name ====");
+        String name = input.askStr("Enter name: ");
+        Item[] selected = tracker.findByName(name);
+        if (selected.length != 0) {
+            printArray(selected);
+        } else {
+            System.out.println("Item with name " + name + " not found.");
         }
     }
 
@@ -87,7 +141,7 @@ public class StartUI {
      * Выводит в консоль каждый элемент в массиве
      * @param items - входящий массив
      */
-    private void printArray(Item[] items) {
+    private static void printArray(Item[] items) {
         for (int i = 0; i < items.length; i++) {
             Item item = items[i];
             System.out.println(item.getId() + ". " + item.getName());
