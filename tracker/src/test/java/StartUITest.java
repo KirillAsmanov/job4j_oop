@@ -2,6 +2,7 @@ import org.junit.Test;
 import tracker.*;
 
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.Assert.assertThat;
 
 public class StartUITest {
@@ -14,5 +15,32 @@ public class StartUITest {
         Item created = tracker.findAll()[0];
         Item expected = new Item("Fix PC");
         assertThat(created.getName(), is(expected.getName()));
+    }
+
+    @Test
+    public void whenReplaceItem() {
+        Tracker tracker = new Tracker();
+        Item item = new Item("new item");
+        tracker.add(item);
+        String[] answers = {
+                item.getId(), // id сохраненной заявки в объект tracker.
+                "replaced item"
+        };
+        StartUI.replaceItem(new StubInput(answers), tracker);
+        Item replaced = tracker.findById(item.getId());
+        assertThat(replaced.getName(), is("replaced item"));
+    }
+
+    @Test
+    public void whenDeleteItem() {
+        Tracker tracker = new Tracker();
+        Item item = new Item("new item");
+        tracker.add(item);
+        String[] answers = {
+                item.getId()
+        };
+        StartUI.deleteItem(new StubInput(answers), tracker);
+        Item replaced = tracker.findById(item.getId());
+        assertThat(replaced, is(nullValue()));
     }
 }
