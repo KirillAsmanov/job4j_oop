@@ -1,12 +1,26 @@
-/*
+
 import org.junit.Test;
 import tracker.*;
+import tracker.actions.StubAction;
+import tracker.actions.UserAction;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.Assert.assertThat;
 
 public class StartUITest {
+
+    @Test
+    public void whenExit() {
+        StubInput input = new StubInput(
+                new String[]{"0"}
+        );
+        StubAction action = new StubAction();
+        new StartUI().init(input, new Tracker(), new UserAction[]{action});
+        assertThat(action.isCall(), is(true));
+    }
+}
+    /*
     @Test
     public void whenAddItem() {
         String[] answers = {"Fix PC"};
