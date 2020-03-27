@@ -2,7 +2,6 @@ import org.junit.Test;
 import tracker.Item;
 import tracker.Tracker;
 
-import java.util.Arrays;
 import static org.hamcrest.core.IsNull.nullValue;
 
 import static org.hamcrest.Matchers.is;
