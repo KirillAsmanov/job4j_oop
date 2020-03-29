@@ -19,4 +19,12 @@ public interface Input {
      * @return - введенное число
      */
     int askInt(String question);
+
+    /**
+     * Просит ввести пользователя число в диапазоне от 0 до max
+     * @param question - входное сообщение
+     * @param max - верхняя граница диапазона
+     * @return - введенное число
+     */
+    int askInt(String question, int max);
 }
