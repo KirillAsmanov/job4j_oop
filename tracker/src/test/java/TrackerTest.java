@@ -2,6 +2,9 @@ import org.junit.Test;
 import tracker.Item;
 import tracker.Tracker;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.hamcrest.core.IsNull.nullValue;
 
 import static org.hamcrest.Matchers.is;
@@ -27,8 +30,11 @@ public class TrackerTest {
         tracker.add(item2);
         tracker.add(item3);
 
-        Item[] result = tracker.findAll();
-        Item[] excepted = new Item[] {item1, item2, item3};
+        List<Item> result = tracker.findAll();
+        List<Item> excepted = new ArrayList<>();
+        excepted.add(item1);
+        excepted.add(item2);
+        excepted.add(item3);
 
         assertThat(result, is(excepted));
     }
@@ -45,8 +51,10 @@ public class TrackerTest {
         tracker.add(item3);
         tracker.add(item4);
 
-        Item[] result = tracker.findByName("I have a twin");
-        Item[] excepted = new Item[] {item1, item4};
+        List<Item> result = tracker.findByName("I have a twin");
+        List<Item> excepted = new ArrayList<>();
+        excepted.add(item1);
+        excepted.add(item4);
 
         assertThat(result, is(excepted));
     }
@@ -63,8 +71,8 @@ public class TrackerTest {
         tracker.add(item3);
         tracker.add(item4);
 
-        Item[] result = tracker.findByName("you can't find me");
-        Item[] excepted = new Item[0];
+        List<Item> result = tracker.findByName("you can't find me");
+        List<Item> excepted = new ArrayList<>();
 
         assertThat(result, is(excepted));
     }

@@ -1,6 +1,8 @@
 package tracker;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -11,23 +13,17 @@ import java.util.Random;
  */
 public class Tracker {
     /**
-     * Массив для хранения заявок
+     * Список для хранения заявок
      */
-    private final Item[] items = new Item[100];
-
-    /**
-     * Указатель ячейки для новой заявки
-     */
-    private int position = 0;
+    private final List<Item> items = new ArrayList<>();
 
     /**
      * Метод реализующий добавление заявки в хранилище
      * @param item новая заявка
      */
-    public Item add(Item item) {
+    public void add(Item item) {
         item.setId(generateId());
-        this.items[position++] = item;
-        return item;
+        this.items.add(item);
     }
 
     /**
@@ -44,8 +40,8 @@ public class Tracker {
      * Возвращает копию массива this.items без null элементов
      * @return - массив без null элементов
      */
-    public Item[] findAll() {
-        return Arrays.copyOf(items, position);
+    public List<Item> findAll() {
+        return items;
     }
 
     /**
@@ -53,18 +49,14 @@ public class Tracker {
      * @param key - искомое имя
      * @return - массив объектов, с совпадающими с искомым именами
      */
-    public Item[] findByName(String key) {
-        Item[] chooseByName = new Item[position];
-        int size = 0;
-        for (int index = 0; index < position; index++) {
-            if (key.equals(items[index].getName())) {
-                chooseByName[size] = items[index];
-                size++;
+    public List<Item> findByName(String key) {
+        List<Item> chosen = new ArrayList<>();
+        for (Item item : items) {
+            if (key.equals(item.getName())) {
+                chosen.add(item);
             }
         }
-        chooseByName = Arrays.copyOf(chooseByName, size);
-        return chooseByName;
-
+        return chosen;
     }
 
     /**
@@ -74,7 +66,7 @@ public class Tracker {
      */
     public Item findById(String id) {
         int index = indexOf(id);
-        return index != -1 ? items[index] : null;
+        return index != -1 ? items.get(index) : null;
     }
 
     /**
@@ -84,8 +76,8 @@ public class Tracker {
      */
     private int indexOf(String id) {
         int rsl = -1;
-        for (int index = 0; index < position; index++) {
-            if (items[index].getId().equals(id)) {
+        for (int index = 0; index < items.size(); index++) {
+            if (items.get(index).getId().equals(id)) {
                 rsl = index;
                 break;
             }
@@ -103,7 +95,7 @@ public class Tracker {
         int index = indexOf(id);
         if (index != -1) {
             item.setId(id);
-            items[index] = item;
+            items.set(index, item);
             rsl = true;
         }
         return rsl;
@@ -117,10 +109,7 @@ public class Tracker {
         boolean rsl = false;
         int index = indexOf(id);
         if (index != -1) {
-            items[index] = null;
-            System.arraycopy(items, index + 1, items, index, position - index);
-            items[position - 1] = null;
-            position--;
+            items.remove(index);
             rsl = true;
         }
         return rsl;

@@ -3,6 +3,9 @@ package tracker.actions;
 import tracker.Input;
 import tracker.Item;
 import tracker.Tracker;
+
+import java.util.List;
+
 /**
  * Класс команды поиска элементов по имени
  * tracker
@@ -30,10 +33,9 @@ public class FindByNameAction implements UserAction {
     @Override
     public boolean execute(Input input, Tracker tracker) {
         String name = input.askStr("Enter name: ");
-        Item[] founds = tracker.findByName(name);
-        if (founds.length != 0) {
-            for (int i = 0; i < founds.length; i++) {
-                Item item = founds[i];
+        List<Item> founds = tracker.findByName(name);
+        if (founds.size() != 0) {
+            for (Item item : founds) {
                 System.out.println(item.getId() + ". " + item.getName());
             }
             System.out.println("==== End of array ====");

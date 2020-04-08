@@ -3,6 +3,9 @@ package tracker.actions;
 import tracker.Input;
 import tracker.Item;
 import tracker.Tracker;
+
+import java.util.List;
+
 /**
  * Класс команды вывода всех элементов в массиве в консоль
  * tracker
@@ -29,9 +32,8 @@ public class ShowAllAction implements UserAction {
      */
     @Override
     public boolean execute(Input input, Tracker tracker) {
-        Item[] allItems = tracker.findAll();
-        for (int i = 0; i < allItems.length; i++) {
-            Item item = allItems[i];
+        List<Item> allItems = tracker.findAll();
+        for (Item item : allItems) {
             System.out.println(item.getId() + ". " + item.getName());
         }
         System.out.println("==== End of array ====");
