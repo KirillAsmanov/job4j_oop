@@ -1,5 +1,5 @@
 import org.junit.Test;
-import tracker.Item;
+import tracker.model.Item;
 import tracker.StubInput;
 import tracker.Tracker;
 

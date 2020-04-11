@@ -1,7 +1,7 @@
 package tracker.actions;
 
 import tracker.Input;
-import tracker.Item;
+import tracker.model.Item;
 import tracker.Tracker;
 
 import java.util.List;
