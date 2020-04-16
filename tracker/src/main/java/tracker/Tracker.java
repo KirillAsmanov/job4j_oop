@@ -22,9 +22,10 @@ public class Tracker {
      * Метод реализующий добавление заявки в хранилище
      * @param item новая заявка
      */
-    public void add(Item item) {
+    public Item add(Item item) {
         item.setId(generateId());
         this.items.add(item);
+        return item;
     }
 
     /**
