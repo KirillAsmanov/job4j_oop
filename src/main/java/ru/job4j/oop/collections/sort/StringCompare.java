@@ -10,18 +10,13 @@ import java.util.Comparator;
 public class StringCompare implements Comparator<String> {
     @Override
     public int compare(String left, String right) {
-        int rsl = Integer.compare(left.length(), right.length());
-        int size = (rsl < 0) ? left.length() : right.length();
-        for (int index = 0; index < size; index++) {
-            int compChars = Character.compare(left.charAt(index), right.charAt(index));
-            if (compChars > 0) {
-                rsl = 1;
-                break;
-            } else if (compChars < 0) {
-                rsl = -1;
+        int rsl = 0;
+        for (int index = 0; index < Math.min(left.length(), right.length()); index++) {
+            rsl = Character.compare(left.charAt(index), right.charAt(index));
+            if (rsl != 0) {
                 break;
             }
         }
-        return rsl;
+        return (rsl == 0) ? Integer.compare(left.length(), right.length()) : rsl;
     }
 }
