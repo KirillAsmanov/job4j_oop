@@ -1,6 +1,8 @@
 package ru.job4j.oop.collections.search;
 
 import java.util.ArrayList;
+import java.util.function.Predicate;
+
 /**
  * 1. Телефонный справочник на базе ArrayList[#245001]
  * @author Kirill Asmanov
@@ -20,9 +22,12 @@ public class PhoneDictionary {
      * @return Список подощедщих пользователей.
      */
     public ArrayList<Person> find(String key) {
+        // Скорее всего я не понял суть задания, ибо сложность и громоздкость условия не сильно изменилась
+        Predicate<String> checkContain = s -> s.contains(key);
+        Predicate<Person> combine = (p) -> checkContain.test(p.getName()) || checkContain.test(p.getSurname()) || checkContain.test(p.getAddress()) || checkContain.test(p.getPhone());
         ArrayList<Person> result = new ArrayList<>();
         for (Person person : persons) {
-            if (person.getName().contains(key) || person.getAddress().contains(key) || person.getPhone().contains(key) || person.getSurname().contains(key)) {
+            if (combine.test(person)) {
                 result.add(person);
             }
         }
