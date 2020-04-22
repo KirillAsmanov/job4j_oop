@@ -1,6 +1,7 @@
 package ru.job4j.oop.collections.search;
 
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 /**
@@ -22,9 +23,13 @@ public class PhoneDictionary {
      * @return Список подощедщих пользователей.
      */
     public ArrayList<Person> find(String key) {
-        // Скорее всего я не понял суть задания, ибо сложность и громоздкость условия не сильно изменилась
-        Predicate<String> checkContain = s -> s.contains(key);
-        Predicate<Person> combine = (p) -> checkContain.test(p.getName()) || checkContain.test(p.getSurname()) || checkContain.test(p.getAddress()) || checkContain.test(p.getPhone());
+
+        Predicate<Person> checkName = p -> p.getName().contains(key);
+        Predicate<Person> checkSurname = p -> p.getSurname().contains(key);
+        Predicate<Person> checkPhone = p -> p.getPhone().contains(key);
+        Predicate<Person> checkAddress = p -> p.getAddress().contains(key);
+
+        Predicate<Person> combine = checkName.or(checkSurname.or(checkPhone.or(checkAddress)));
         ArrayList<Person> result = new ArrayList<>();
         for (Person person : persons) {
             if (combine.test(person)) {
