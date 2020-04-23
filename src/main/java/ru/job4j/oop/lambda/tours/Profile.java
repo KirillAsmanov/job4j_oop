@@ -1,4 +1,7 @@
 package ru.job4j.oop.lambda.tours;
+
+import java.util.Objects;
+
 /**
  * 2. Список адресов [#244874]
  * Модель данных профиля клиента
@@ -17,7 +20,7 @@ public class Profile {
         this.address = new Address(city, street, home, apartment);
     }
 
-    public class Address {
+    public class Address implements Comparable<Address> {
         private String city;
         private String street;
         private int home;
@@ -28,6 +31,26 @@ public class Profile {
             this.street = street;
             this.home = home;
             this.apartment = apartment;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            Address address = (Address) o;
+            return apartment == address.apartment
+                    && home == address.home
+                    && Objects.equals(city, address.city)
+                    && Objects.equals(street, address.street);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(city, street, home, apartment);
         }
 
         public String getCity() {
@@ -62,6 +85,10 @@ public class Profile {
             this.apartment = apartment;
         }
 
+        @Override
+        public int compareTo(Address o) {
+            return Integer.compare(this.home, o.home);
+        }
     }
 
 }
