@@ -14,14 +14,17 @@ public class BankService {
     /**
      * Хранит данные в формате ключ - пользователь, значение - список его счетов
      */
-    private Map<User, List<Account>> users = new HashMap<>();
+    private final Map<User, List<Account>> users = new HashMap<>();
 
     /**
      * Добавляет нового пользователя, если его еще нет в базе
      * @param user - добавляемый пользователь
      */
     public void addUser(User user) {
-        users.putIfAbsent(user, new ArrayList<Account>());
+        if (users.containsKey(user)) {
+            throw new IllegalArgumentException("Пользователь уже существует");
+        }
+        users.put(user, new ArrayList<>());
     }
 
     /**
@@ -30,13 +33,16 @@ public class BankService {
      * @param account - добавляемый счет
      */
     public void addAccount(String passport, Account account) {
-        if (findByPassport(passport) != null) {
-            List<Account> accounts = users.get(findByPassport(passport));
-            int index = accounts.indexOf(account);
-            if (index == -1) {
-                accounts.add(account);
-            }
+        User found = findByPassport(passport);
+        if (found == null) {
+            throw new IllegalArgumentException("Пользователя не существует");
         }
+        List<Account> accounts = users.get(found);
+        int index = accounts.indexOf(account);
+        if (index != -1) {
+            throw new IllegalArgumentException("Такой счет уже существует");
+        }
+        accounts.add(account);
     }
 
     /**
@@ -62,15 +68,16 @@ public class BankService {
      * @return - искомый счет / null если не найден
      */
     public Account findByRequisite(String passport, String requisite) {
-        Account found = null;
-        if (findByPassport(passport) != null) {
-            List<Account> accounts = users.get(findByPassport(passport));
-            int index = accounts.indexOf(new Account(requisite, -1));
-            if (index != -1) {
-                found = accounts.get(index);
-            }
+        User uFound = findByPassport(passport);
+        if (uFound == null) {
+            throw new IllegalStateException("Пользователь с таким паспортом не найден");
         }
-        return found;
+        List<Account> accounts = users.get(uFound);
+        int index = accounts.indexOf(new Account(requisite, -1));
+        if (index == -1) {
+            throw new IllegalStateException("Счета с таким номером не найдено");
+        }
+        return accounts.get(index);
     }
 
     /**
@@ -87,7 +94,7 @@ public class BankService {
         boolean rsl = false;
         Account srcAcc = findByRequisite(srcPassport, srcRequisite);
         Account destAcc = findByRequisite(destPassport, destRequisite);
-        if ((srcAcc != null) && (destAcc != null) && (srcAcc.getBalance() >= amount)) {
+        if (srcAcc != null && destAcc != null && srcAcc.getBalance() >= amount) {
             srcAcc.setBalance(srcAcc.getBalance() - amount);
             destAcc.setBalance(destAcc.getBalance() + amount);
             rsl = true;
