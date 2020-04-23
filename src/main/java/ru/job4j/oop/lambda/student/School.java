@@ -1,0 +1,25 @@
+package ru.job4j.oop.lambda.student;
+
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+/**
+ * 1. Фильтрация учеников. [#244873]
+ * @author Kirill Asmanov
+ * @since 23.04.2020
+ * @version 1.0.0;
+ */
+public class School {
+    /**
+     * Реализует выборку из списка по переданному предикату и сортирует его
+     * @param students - входящий список учеников
+     * @param predict - условие разделения
+     * @return - список, состоящий из учеников, подходящих под условие
+     */
+    public static List<Student> collect(List<Student> students, Predicate<Student> predict) {
+        return students.stream()
+                .filter(predict)
+                .sorted()
+                .collect(Collectors.toList());
+    }
+}
