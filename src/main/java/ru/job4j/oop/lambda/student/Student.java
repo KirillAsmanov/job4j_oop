@@ -1,4 +1,7 @@
 package ru.job4j.oop.lambda.student;
+
+import java.util.Objects;
+
 /**
  * 1. Фильтрация учеников. [#244873]
  * Модель данных ученика
@@ -7,7 +10,16 @@ package ru.job4j.oop.lambda.student;
  * @version 1.0.0;
  */
 public class Student implements Comparable<Student> {
+    private String surname;
     private int score;
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
 
     public int getScore() {
         return score;
@@ -17,17 +29,36 @@ public class Student implements Comparable<Student> {
         this.score = score;
     }
 
-    public Student(int score) {
+    public Student(String surname, int score) {
+        this.surname = surname;
         this.score = score;
     }
 
     @Override
     public String toString() {
-        return "score=" + "Student{" + score + '}';
+        return surname + score;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Student student = (Student) o;
+        return score == student.score
+                && Objects.equals(surname, student.surname);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(surname, score);
     }
 
     @Override
     public int compareTo(Student o) {
-        return Integer.compare(this.score, o.score);
+        return this.surname.compareTo(o.surname);
     }
 }

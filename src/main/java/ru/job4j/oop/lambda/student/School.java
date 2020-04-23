@@ -1,6 +1,7 @@
 package ru.job4j.oop.lambda.student;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 /**
@@ -21,5 +22,17 @@ public class School {
                 .filter(predict)
                 .sorted()
                 .collect(Collectors.toList());
+    }
+    /**
+     * Реализует преобразование списка в Map
+     * @param students - входящий список учеников
+     * @return - список, состоящий из учеников, подходящих под условие
+     */
+    public static Map<String, Student> collectToMap(List<Student> students) {
+        return students.stream()
+                .collect(Collectors.toMap(
+                        Student::getSurname,
+                        s -> s
+                ));
     }
 }
