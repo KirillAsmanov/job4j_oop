@@ -17,11 +17,9 @@ public class TravelAgency {
      * @return список с адресами
      */
     public static List<Profile.Address> collect(List<Profile> profiles) {
-        Function<Profile, Profile.Address> extractAddress = Profile::getAddress;
-        List<Profile.Address> rsl = profiles.stream()
-                .map(extractAddress)
+        return profiles.stream()
+                .map(Profile::getAddress)
                 .collect(Collectors.toList());
-        return rsl;
     }
 
     /**
@@ -30,11 +28,9 @@ public class TravelAgency {
      * @return список с адресами
      */
     public static List<Profile.Address> uniqueSort(List<Profile> profiles) {
-        Comparator<Profile.Address> sortByCity = Comparator.comparing(Profile.Address::getCity);
-        List<Profile.Address> rsl = collect(profiles).stream()
-                .sorted(sortByCity)
+        return  collect(profiles).stream()
+                .sorted(Comparator.comparing(Profile.Address::getCity))
                 .distinct()
                 .collect(Collectors.toList());
-        return rsl;
     }
 }
