@@ -25,26 +25,45 @@ public class SchoolTest {
     }
     @Test
     public void studentsOfAClass() {
-        List<Student> classA = School.collect(studPool, s -> (s.getScore() >= 0) && (s.getScore() < 50));
-        assertThat(classA.get(1).getScore(), is(25));
+        List<Student> result = School.collect(studPool, s -> (s.getScore() >= 0) && (s.getScore() < 50));
+        List<Student> expected = List.of(
+                new Student("A", 0),
+                new Student("B", 25)
+        );
+        assertThat(result, is(expected));
     }
 
     @Test
     public void studentsOfBClass() {
-        List<Student> classA = School.collect(studPool, s -> (s.getScore() >= 50) && (s.getScore() < 70));
-        assertThat(classA.get(0).getScore(), is(50));
+        List<Student> result = School.collect(studPool, s -> (s.getScore() >= 50) && (s.getScore() < 70));
+        List<Student> expected = List.of(
+                new Student("C", 50)
+        );
+        assertThat(result, is(expected));
     }
 
     @Test
     public void studentsOfCClass() {
-        List<Student> classA = School.collect(studPool, s -> (s.getScore() >= 70) && (s.getScore() <= 100));
-        assertThat(classA.get(1).getScore(), is(100));
+        List<Student> result = School.collect(studPool, s -> (s.getScore() >= 70) && (s.getScore() <= 100));
+        List<Student> expected = List.of(
+                new Student("D", 75),
+                new Student("E", 100)
+        );
+        assertThat(result, is(expected));
     }
 
     @Test
     public void studentsClassOnMap() {
-        Map<String, Student> classA = School.collectToMap(studPool);
-        assertThat(classA.get("C"), is(new Student("C", 50)));
+        Map<String, Student> result = School.collectToMap(studPool);
+        Map<String, Student> expected = Map.of(
+                "A", new Student("A", 0),
+                "B", new Student("B", 25),
+                "C", new Student("C", 50),
+                "D", new Student("D", 75),
+                "E", new Student("E", 100)
+
+        );
+        assertThat(result, is(expected));
     }
 
     @Test
