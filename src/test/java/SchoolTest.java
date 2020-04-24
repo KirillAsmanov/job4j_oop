@@ -46,4 +46,14 @@ public class SchoolTest {
         Map<String, Student> classA = School.collectToMap(studPool);
         assertThat(classA.get("C"), is(new Student("C", 50)));
     }
+
+    @Test
+    public void studentsWhichScoreHighThen50() {
+        List<Student> result = School.levelOf(studPool, 50);
+        List<Student> expected = Arrays.asList(
+                new Student("D", 75),
+                new Student("E", 100)
+        );
+        assertThat(result, is(expected));
+    }
 }
