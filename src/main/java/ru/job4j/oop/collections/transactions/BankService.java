@@ -1,9 +1,7 @@
 package ru.job4j.oop.collections.transactions;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 /**
  * 3. Банковские переводы.[#245011]
  * @author Kirill Asmanov
@@ -22,7 +20,7 @@ public class BankService {
      */
     public void addUser(User user) {
         if (users.containsKey(user)) {
-            throw new IllegalArgumentException("Пользователь уже существует");
+            throw new NoSuchElementException("Пользователь не найден");
         }
         users.put(user, new ArrayList<>());
     }
@@ -35,7 +33,7 @@ public class BankService {
     public void addAccount(String passport, Account account) {
         User found = findByPassport(passport);
         if (found == null) {
-            throw new IllegalArgumentException("Пользователя не существует");
+            throw new NoSuchElementException("Пользователь не найден");
         }
         List<Account> accounts = users.get(found);
         int index = accounts.indexOf(account);
@@ -51,14 +49,10 @@ public class BankService {
      * @return - искомый пользователь / null если не найден
      */
     public User findByPassport(String passport) {
-        User found = null;
-        for (User user : users.keySet()) {
-            if (user.equals(new User(passport, ""))) {
-                found = user;
-                break;
-            }
-        }
-        return found;
+        return users.keySet().stream().
+                filter(new User(passport, "")::equals).
+                findFirst().
+                orElse(null);
     }
 
     /**
@@ -68,16 +62,14 @@ public class BankService {
      * @return - искомый счет / null если не найден
      */
     public Account findByRequisite(String passport, String requisite) {
-        User uFound = findByPassport(passport);
-        if (uFound == null) {
-            throw new IllegalStateException("Пользователь с таким паспортом не найден");
+        User found = findByPassport(passport);
+        if (found == null) {
+            throw new NoSuchElementException("Пользователь не найден");
         }
-        List<Account> accounts = users.get(uFound);
-        int index = accounts.indexOf(new Account(requisite, -1));
-        if (index == -1) {
-            throw new IllegalStateException("Счета с таким номером не найдено");
-        }
-        return accounts.get(index);
+        return users.get(found).stream().
+                filter(new Account(requisite, -1)::equals).
+                findFirst().
+                orElse(null);
     }
 
     /**

@@ -3,6 +3,8 @@ import ru.job4j.oop.collections.transactions.Account;
 import ru.job4j.oop.collections.transactions.BankService;
 import ru.job4j.oop.collections.transactions.User;
 
+import java.util.NoSuchElementException;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
@@ -16,7 +18,7 @@ public class BankServiceTest {
         assertThat(bank.findByPassport("3434"), is(user));
     }
 
-    @Test (expected = IllegalStateException.class)
+    @Test (expected = NoSuchElementException.class)
     public void whenEnterInvalidPassport() {
         User user = new User("3434", "Petr Arsentev");
         BankService bank = new BankService();
