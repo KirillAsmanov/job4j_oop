@@ -20,7 +20,7 @@ public class BankService {
      */
     public void addUser(User user) {
         if (users.containsKey(user)) {
-            throw new NoSuchElementException("Пользователь не найден");
+            throw new IllegalArgumentException("Пользователь уже существует");
         }
         users.put(user, new ArrayList<>());
     }
@@ -31,10 +31,7 @@ public class BankService {
      * @param account - добавляемый счет
      */
     public void addAccount(String passport, Account account) {
-        User found = findByPassport(passport);
-        if (found == null) {
-            throw new NoSuchElementException("Пользователь не найден");
-        }
+        User found = findByPassport(passport).orElseThrow(() -> new NoSuchElementException("Пользователь не найден"));
         List<Account> accounts = users.get(found);
         int index = accounts.indexOf(account);
         if (index != -1) {
@@ -48,11 +45,11 @@ public class BankService {
      * @param passport - уникальный идентификатор пользователя
      * @return - искомый пользователь / null если не найден
      */
-    public User findByPassport(String passport) {
-        return users.keySet().stream().
-                filter(new User(passport, "")::equals).
-                findFirst().
-                orElse(null);
+    public Optional<User> findByPassport(String passport) {
+        return users.keySet()
+                    .stream()
+                    .filter(new User(passport, "")::equals)
+                    .findFirst();
     }
 
     /**
@@ -61,15 +58,11 @@ public class BankService {
      * @param requisite - номер искомого счета
      * @return - искомый счет / null если не найден
      */
-    public Account findByRequisite(String passport, String requisite) {
-        User found = findByPassport(passport);
-        if (found == null) {
-            throw new NoSuchElementException("Пользователь не найден");
-        }
+    public Optional<Account> findByRequisite(String passport, String requisite) {
+        User found = findByPassport(passport).orElseThrow(() -> new NoSuchElementException("Пользователь не найден"));
         return users.get(found).stream().
                 filter(new Account(requisite, -1)::equals).
-                findFirst().
-                orElse(null);
+                findFirst();
     }
 
     /**
@@ -84,9 +77,11 @@ public class BankService {
     public boolean transferMoney(String srcPassport, String srcRequisite,
                                  String destPassport, String destRequisite, double amount) {
         boolean rsl = false;
-        Account srcAcc = findByRequisite(srcPassport, srcRequisite);
-        Account destAcc = findByRequisite(destPassport, destRequisite);
-        if (srcAcc != null && destAcc != null && srcAcc.getBalance() >= amount) {
+        Account srcAcc = findByRequisite(srcPassport, srcRequisite)
+                .orElseThrow(() -> new NoSuchElementException("Аккаунт не найден"));
+        Account destAcc = findByRequisite(destPassport, destRequisite)
+                .orElseThrow(() -> new NoSuchElementException("Аккаунт не найден"));
+        if (srcAcc.getBalance() >= amount) {
             srcAcc.setBalance(srcAcc.getBalance() - amount);
             destAcc.setBalance(destAcc.getBalance() + amount);
             rsl = true;
