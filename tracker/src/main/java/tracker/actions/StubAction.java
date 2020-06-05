@@ -1,7 +1,7 @@
 package tracker.actions;
 
 import tracker.Input;
-import tracker.Tracker;
+import tracker.Store;
 
 public class StubAction implements UserAction {
     private boolean call = false;
@@ -12,7 +12,7 @@ public class StubAction implements UserAction {
     }
 
     @Override
-    public boolean execute(Input input, Tracker tracker) {
+    public boolean execute(Input input, Store tracker) {
         call = true;
         return false;
     }

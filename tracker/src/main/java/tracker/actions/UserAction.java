@@ -1,7 +1,9 @@
 package tracker.actions;
 
 import tracker.Input;
-import tracker.Tracker;
+import tracker.Store;
+
+
 /**
  * Интерфейс команды
  * tracker
@@ -21,5 +23,5 @@ public interface UserAction {
      * @param tracker - хранилище данных
      * @return - true, если это не операция выхода из системы
      */
-    boolean execute(Input input, Tracker tracker);
+    boolean execute(Input input, Store tracker);
 }

@@ -1,7 +1,7 @@
 import org.junit.Test;
 import tracker.model.Item;
 import tracker.StubInput;
-import tracker.Tracker;
+import tracker.MemTracker;
 
 import tracker.actions.FindByIdAction;
 
@@ -19,7 +19,7 @@ public class FindByIdActionTest {
         PrintStream def = System.out;
         System.setOut(new PrintStream(out));
 
-        Tracker tracker = new Tracker();
+        MemTracker tracker = new MemTracker();
         Item item = new Item("new item");
         tracker.add(item);
         String[] answers = {
@@ -41,7 +41,7 @@ public class FindByIdActionTest {
         PrintStream def = System.out;
         System.setOut(new PrintStream(out));
 
-        Tracker tracker = new Tracker();
+        MemTracker tracker = new MemTracker();
         Item item = new Item("new item");
         tracker.add(item);
         String[] answers = {

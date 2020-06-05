@@ -1,8 +1,9 @@
 package tracker.actions;
 
 import tracker.Input;
+import tracker.Store;
 import tracker.model.Item;
-import tracker.Tracker;
+
 /**
  * Класс команды поиска элементов по id
  * tracker
@@ -28,7 +29,7 @@ public class FindByIdAction implements UserAction {
      * @return - true, если это не операция выхода из системы
      */
     @Override
-    public boolean execute(Input input, Tracker tracker) {
+    public boolean execute(Input input, Store tracker) {
         String id = input.askStr("Enter id: ");
         Item item = tracker.findById(id);
         if (item != null) {

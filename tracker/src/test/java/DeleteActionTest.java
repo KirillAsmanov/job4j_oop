@@ -1,7 +1,7 @@
 import org.junit.Test;
 import tracker.model.Item;
 import tracker.StubInput;
-import tracker.Tracker;
+import tracker.MemTracker;
 import tracker.actions.DeleteAction;
 
 import static org.hamcrest.core.Is.is;
@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 public class DeleteActionTest {
     @Test
     public void whenDeleteItem() {
-        Tracker tracker = new Tracker();
+        MemTracker tracker = new MemTracker();
         Item item = new Item("new item");
         tracker.add(item);
         String[] answers = {

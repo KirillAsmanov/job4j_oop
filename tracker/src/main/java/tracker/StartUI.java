@@ -17,10 +17,10 @@ public class StartUI {
      * @param input - интерфейс ввода данных
      * @param tracker - экземпляр хранилища
      */
-    public void init(Input input, Tracker tracker, List<UserAction> actions) {
+    public void init(Input input, Store tracker, List<UserAction> actions) {
         boolean run = true;
+        this.showMenu(actions);
         while (run) {
-            this.showMenu(actions);
             int select = input.askInt("Select: ", actions.size());
             UserAction action = actions.get(select);
             run = action.execute(input, tracker);
@@ -31,7 +31,7 @@ public class StartUI {
      * Выводит в консоль меню приложения
      */
     private void showMenu(List<UserAction> actions) {
-        System.out.println("Menu.");
+        System.out.println("Menu:");
         for (UserAction action : actions) {
             System.out.println(actions.indexOf(action) + ". " + action.name());
         }
@@ -41,17 +41,19 @@ public class StartUI {
     public static void main(String[] args) {
         Input input = new ConsoleInput();
         Input validate = new ValidateInput(input);
-        Tracker tracker = new Tracker();
-
-        List<UserAction> actions = new ArrayList<>();
-        actions.add(new CreateAction());
-        actions.add(new ShowAllAction());
-        actions.add(new ReplaceAction());
-        actions.add(new DeleteAction());
-        actions.add(new FindByIdAction());
-        actions.add(new FindByNameAction());
-        actions.add(new QuitAction());
-
-        new StartUI().init(validate, tracker, actions);
+        try (Store tracker = new SqlTracker()) {
+            tracker.init();
+            List<UserAction> actions = new ArrayList<>();
+            actions.add(new CreateAction());
+            actions.add(new ShowAllAction());
+            actions.add(new ReplaceAction());
+            actions.add(new DeleteAction());
+            actions.add(new FindByIdAction());
+            actions.add(new FindByNameAction());
+            actions.add(new QuitAction());
+            new StartUI().init(validate, tracker, actions);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

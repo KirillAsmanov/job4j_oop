@@ -1,8 +1,8 @@
 package tracker.actions;
 
 import tracker.Input;
+import tracker.Store;
 import tracker.model.Item;
-import tracker.Tracker;
 
 import java.util.List;
 
@@ -31,7 +31,7 @@ public class FindByNameAction implements UserAction {
      * @return - true, если это не операция выхода из системы
      */
     @Override
-    public boolean execute(Input input, Tracker tracker) {
+    public boolean execute(Input input, Store tracker) {
         String name = input.askStr("Enter name: ");
         List<Item> founds = tracker.findByName(name);
         if (founds.size() != 0) {

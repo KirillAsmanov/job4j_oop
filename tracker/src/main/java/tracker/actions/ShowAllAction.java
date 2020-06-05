@@ -1,8 +1,8 @@
 package tracker.actions;
 
 import tracker.Input;
+import tracker.Store;
 import tracker.model.Item;
-import tracker.Tracker;
 
 import java.util.List;
 
@@ -31,12 +31,12 @@ public class ShowAllAction implements UserAction {
      * @return - true, если это не операция выхода из системы
      */
     @Override
-    public boolean execute(Input input, Tracker tracker) {
+    public boolean execute(Input input, Store tracker) {
         List<Item> allItems = tracker.findAll();
         for (Item item : allItems) {
             System.out.println(item.getId() + ". " + item.getName());
         }
-        System.out.println("==== End of array ====");
+        System.out.println("==== End of data set ====");
         return true;
     }
 }

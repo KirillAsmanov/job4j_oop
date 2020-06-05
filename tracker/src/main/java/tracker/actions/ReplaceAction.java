@@ -1,8 +1,8 @@
 package tracker.actions;
 
 import tracker.Input;
+import tracker.Store;
 import tracker.model.Item;
-import tracker.Tracker;
 /**
  * Класс команды замены элемента
  * tracker
@@ -28,7 +28,7 @@ public class ReplaceAction implements UserAction {
      * @return - true, если это не операция выхода из системы
      */
     @Override
-    public boolean execute(Input input, Tracker tracker) {
+    public boolean execute(Input input, Store tracker) {
         String id = input.askStr("Enter id: ");
         String name = input.askStr("Enter a new name: ");
         Item newItem = new Item(name);

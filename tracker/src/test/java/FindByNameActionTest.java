@@ -1,7 +1,7 @@
 import org.junit.Test;
 import tracker.model.Item;
 import tracker.StubInput;
-import tracker.Tracker;
+import tracker.MemTracker;
 
 import tracker.actions.FindByNameAction;
 
@@ -20,7 +20,7 @@ public class FindByNameActionTest {
         PrintStream def = System.out;
         System.setOut(new PrintStream(out));
 
-        Tracker tracker = new Tracker();
+        MemTracker tracker = new MemTracker();
         Item item1 = new Item("Du");
         Item item2 = new Item("Du");
         Item item3 = new Item("Hast");
@@ -48,7 +48,7 @@ public class FindByNameActionTest {
         PrintStream def = System.out;
         System.setOut(new PrintStream(out));
 
-        Tracker tracker = new Tracker();
+        MemTracker tracker = new MemTracker();
         Item item1 = new Item("Du");
         Item item2 = new Item("Du");
         Item item3 = new Item("Hast");

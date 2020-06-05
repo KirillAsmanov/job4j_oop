@@ -15,19 +15,12 @@ public class Group {
      * @param students list учеников
      * @return Map, где key - название кружка, value - список имен, состоящих в нем
      */
+
     public static Map<String, Set<String>> sections(List<Student> students) {
-        return students.stream().flatMap(
-                student -> student.getUnits().stream().map(unit -> new Holder(unit, student.getName()))
-        ).collect(
-                Collectors.groupingBy(holder -> holder.key, Collector.of(
-                        HashSet::new,
-                        (set, el) -> set.add(el.value),
-                        (left, right) -> {
-                            left.addAll(right);
-                            return left;
-                        })
-                )
-        );
+        return students.stream().flatMap(student -> student.getUnits().stream().map(unit -> new Holder(unit, student.getName()))).collect(Collectors.groupingBy(holder -> holder.key, Collector.of(HashSet::new, (set, el) -> set.add(el.value), (left, right) -> {
+            left.addAll(right);
+            return left;
+        })));
     }
 
     /**

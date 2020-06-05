@@ -1,7 +1,7 @@
 import org.junit.Test;
 import tracker.model.Item;
 import tracker.StubInput;
-import tracker.Tracker;
+import tracker.MemTracker;
 import tracker.actions.CreateAction;
 
 import static org.hamcrest.core.Is.is;
@@ -11,7 +11,7 @@ public class CreateActionTest {
     @Test
     public void whenCreateItem() {
         String[] answers = {"Test Item"};
-        Tracker tracker = new Tracker();
+        MemTracker tracker = new MemTracker();
         StubInput input = new StubInput(answers);
         new CreateAction().execute(input, tracker);
         Item created = tracker.findAll().get(0);

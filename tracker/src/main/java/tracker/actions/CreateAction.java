@@ -1,8 +1,9 @@
 package tracker.actions;
 
 import tracker.Input;
+import tracker.Store;
 import tracker.model.Item;
-import tracker.Tracker;
+
 /**
  * Класс команды добавления элементов в массив
  * tracker
@@ -28,7 +29,7 @@ public class CreateAction implements UserAction {
      * @return - true, если это не операция выхода из системы
      */
     @Override
-    public boolean execute(Input input, Tracker tracker) {
+    public boolean execute(Input input, Store tracker) {
         String name = input.askStr("Enter name: ");
         Item item = new Item(name);
         tracker.add(item);

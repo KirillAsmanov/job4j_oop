@@ -1,7 +1,7 @@
 import org.junit.Test;
 import tracker.model.Item;
 import tracker.StubInput;
-import tracker.Tracker;
+import tracker.MemTracker;
 import tracker.actions.*;
 
 import java.io.ByteArrayOutputStream;
@@ -18,7 +18,7 @@ public class ReplaceActionTest {
         PrintStream def = System.out;
         System.setOut(new PrintStream(out));
 
-        Tracker tracker = new Tracker();
+        MemTracker tracker = new MemTracker();
         Item item = new Item("Test");
         tracker.add(item);
 
@@ -43,7 +43,7 @@ public class ReplaceActionTest {
         PrintStream def = System.out;
         System.setOut(new PrintStream(out));
 
-        Tracker tracker = new Tracker();
+        MemTracker tracker = new MemTracker();
         Item item = new Item("Test");
         tracker.add(item);
 

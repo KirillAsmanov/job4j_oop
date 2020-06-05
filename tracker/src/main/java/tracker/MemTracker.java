@@ -12,11 +12,12 @@ import java.util.Random;
  * @author Kirill Asmanov
  * @since 22.03.2020
  */
-public class Tracker {
+public class MemTracker implements Store {
     /**
      * Список для хранения заявок
      */
     private final List<Item> items = new ArrayList<>();
+
 
     /**
      * Метод реализующий добавление заявки в хранилище
@@ -115,5 +116,15 @@ public class Tracker {
             rsl = true;
         }
         return rsl;
+    }
+
+    @Override
+    public void init() {
+        // added to maintain tests
+    }
+
+    @Override
+    public void close() throws Exception {
+        // added to maintain tests
     }
 }

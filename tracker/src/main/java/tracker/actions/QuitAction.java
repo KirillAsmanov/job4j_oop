@@ -1,7 +1,8 @@
 package tracker.actions;
 
 import tracker.Input;
-import tracker.Tracker;
+import tracker.Store;
+
 /**
  * Класс команды выхода
  * tracker
@@ -27,7 +28,7 @@ public class QuitAction implements UserAction {
      * @return - true, если это не операция выхода из системы
      */
     @Override
-    public boolean execute(Input input, Tracker tracker) {
+    public boolean execute(Input input, Store tracker) {
         return false;
     }
 }

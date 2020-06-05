@@ -1,7 +1,9 @@
 package tracker.actions;
 
 import tracker.Input;
-import tracker.Tracker;
+import tracker.Store;
+
+
 /**
  * Класс команды удаления элементов по id
  * tracker
@@ -27,7 +29,7 @@ public class DeleteAction implements UserAction {
      * @return - true, если это не операция выхода из системы
      */
     @Override
-    public boolean execute(Input input, Tracker tracker) {
+    public boolean execute(Input input, Store tracker) {
         String id = input.askStr("Enter id: ");
         if (tracker.delete(id)) {
             System.out.println("Delete complete successfully.");
