@@ -38,7 +38,7 @@ public class StartUITest {
         actions.add(action);
         new StartUI().init(input, new MemTracker(), actions);
         String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
-                .add("Menu.")
+                .add("Menu:")
                 .add("0. Stub action")
                 .toString();
         assertThat(new String(out.toByteArray()), is(expect));

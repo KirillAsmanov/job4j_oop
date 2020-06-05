@@ -25,7 +25,7 @@ public class ShowAllActionTest {
         act.execute(new StubInput(new String[] {}), tracker);
         String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
                 .add(item.getId() + ". " + item.getName())
-                .add("==== End of array ====")
+                .add("==== End of data set ====")
                 .toString();
         assertThat(new String(out.toByteArray()), is(expect));
 
